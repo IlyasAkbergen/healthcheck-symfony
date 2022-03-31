@@ -9,13 +9,16 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class DoctrineCheck extends HealthCheck
 {
-    protected string $name = 'doctrine';
-
     private ContainerInterface $container;
 
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
+    }
+
+    public function name(): string
+    {
+        return 'doctrine';
     }
 
     public function handle(): Status

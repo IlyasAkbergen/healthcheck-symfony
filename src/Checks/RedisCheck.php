@@ -8,13 +8,16 @@ use Predis\ClientInterface as Redis;
 
 class RedisCheck extends HealthCheck
 {
-    protected string $name = 'redis';
-
     private Redis $redis;
 
     public function __construct(Redis $redis)
     {
         $this->redis = $redis;
+    }
+
+    public function name(): string
+    {
+        return 'redis';
     }
 
     public function handle(): Status
