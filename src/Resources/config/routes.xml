@@ -5,15 +5,9 @@
         https://symfony.com/schema/routing/routing-1.0.xsd">
 
     <route
-            id="health"
-            path="/health"
-            controller="SymfonyHealthCheckBundle\Controller\HealthController::healthCheckAction"
-            methods="GET"
-    />
-    <route
-            id="ping"
-            path="/ping"
-            controller="SymfonyHealthCheckBundle\Controller\PingController::pingAction"
+            id="healthcheck"
+            path="/healthcheck"
+            controller="Esb\HealthCheckSymfony\Controller\HealthCheckController::index"
             methods="GET"
     />
 </routes>
