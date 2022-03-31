@@ -20,7 +20,11 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->arrayNode('checks')
-                    ->scalarPrototype()->end()
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('id')->cannotBeEmpty()->end()
+                        ->end()
+                    ->end()
                 ->end()
             ->end()
         ;
