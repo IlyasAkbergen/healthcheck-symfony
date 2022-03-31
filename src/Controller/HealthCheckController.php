@@ -1,6 +1,6 @@
 <?php
 
-namespace Esb\HealthCheck\Symfony\Controller;
+namespace Esb\HealthCheckSymfony\Controller;
 
 use Esb\HealthCheck\HealthCheckService;
 use Esb\HealthCheck\Status;

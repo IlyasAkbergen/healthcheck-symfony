@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+    http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <defaults autowire="true" autoconfigure="true" public="true" />
+        <service id="health_check_symfony.doctrine_check" class="Esb\HealthCheckSymfony\Checks\DoctrineCheck">
+            <argument type="service" id="service_container"/>
+        </service>
+        <service id="health_check_symfony.redis_check" class="Esb\HealthCheckSymfony\Checks\RedisCheck">
+            <argument type="service" id="service_container"/>
+        </service>
+        <service id="health_check_symfony.rabbit_mq_check" class="Esb\HealthCheckSymfony\Checks\RabbitMQCheck"/>
+    </services>
+</container>

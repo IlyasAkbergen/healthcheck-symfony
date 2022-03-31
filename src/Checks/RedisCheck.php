@@ -1,6 +1,6 @@
 <?php
 
-namespace Esb\HealthCheck\Symfony\Checks;
+namespace Esb\HealthCheckSymfony\Checks;
 
 use Esb\HealthCheck\HealthCheck;
 use Esb\HealthCheck\Status;
