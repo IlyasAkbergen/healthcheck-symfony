@@ -2,6 +2,7 @@
 
 namespace Esb\HealthCheckSymfony\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Esb\HealthCheck\HealthCheck;
 use Esb\HealthCheck\HealthCheckService;
 use Esb\HealthCheck\Status;
@@ -9,7 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class HealthCheckController
+class HealthCheckController extends AbstractController
 {
     /**
      * @var array<HealthCheck>
