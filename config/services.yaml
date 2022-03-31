@@ -1,0 +1,11 @@
+services:
+    Esb\HealthCheck\Symfony\Checks\:
+        resource: '../src/Symfony/Checks/*'
+
+    Esb\HealthCheck\HealthCheckService:
+        arguments: [
+           [
+                 # 'Esb\HealthCheck\Symfony\Checks\DoctrineCheck',
+                 # 'Esb\HealthCheck\Symfony\Checks\RedisCheck',
+           ]
+        ]
