@@ -2,7 +2,7 @@
 
 namespace Esb\HealthCheckSymfony\DependencyInjection;
 
-use Esb\HealthCheck\HealthCheckService;
+use Esb\HealthCheckSymfony\Controller\HealthCheckController;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -40,11 +40,11 @@ class HealthCheckSymfonyExtension extends Extension
     ): void {
         $loader->load('checks.xml');
 
-        $healthCheckService = $container->findDefinition(HealthCheckService::class);
+        $healthCheckController = $container->findDefinition(HealthCheckController::class);
 
         foreach ($config['checks'] as $healthCheckConfig) {
             $healthCheckDefinition = new Reference($healthCheckConfig['id']);
-            $healthCheckService->addMethodCall('addCheck', [$healthCheckDefinition]);
+            $healthCheckController->addMethodCall('addCheck', [$healthCheckDefinition]);
         }
     }
 }
