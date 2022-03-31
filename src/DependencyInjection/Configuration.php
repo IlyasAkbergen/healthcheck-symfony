@@ -8,14 +8,14 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder('healthcheck');
+        $treeBuilder = new TreeBuilder('healthcheck-symfony');
 
         /** @var ArrayNodeDefinition $rootNode */
         $rootNode = method_exists(TreeBuilder::class, 'getRootNode')
             ? $treeBuilder->getRootNode()
-            : $treeBuilder->root('healthcheck');
+            : $treeBuilder->root('healthcheck-symfony');
 
         $rootNode
             ->children()
