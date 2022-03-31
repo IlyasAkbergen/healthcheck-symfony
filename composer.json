@@ -3,7 +3,6 @@
     "type": "library",
     "require": {
         "php": ">=7.4",
-        "symfony/framework-bundle": "^3.4 || ^4.1.12 || ^5.0 || ^6.0",
         "esb/healthcheck": "dev-master"
     },
     "require-dev": {
@@ -18,13 +17,6 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Esb\\HealthCheck\\Laravel\\HealthCheckServiceProvider"
-            ]
         }
     },
     "scripts": {
