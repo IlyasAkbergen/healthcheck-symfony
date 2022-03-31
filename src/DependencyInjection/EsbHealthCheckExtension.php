@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 
-class EsbHealthcheckExtension extends Extension
+class EsbHealthCheckExtension extends Extension
 {
     /**
      * @param array<array> $configs

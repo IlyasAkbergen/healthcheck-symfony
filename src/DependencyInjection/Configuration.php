@@ -10,12 +10,12 @@ class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder('healthcheck-symfony');
+        $treeBuilder = new TreeBuilder('health-check-symfony');
 
         /** @var ArrayNodeDefinition $rootNode */
         $rootNode = method_exists(TreeBuilder::class, 'getRootNode')
             ? $treeBuilder->getRootNode()
-            : $treeBuilder->root('healthcheck-symfony');
+            : $treeBuilder->root('health-check-symfony');
 
         $rootNode
             ->children()
