@@ -6,7 +6,7 @@
     <services>
         <defaults autowire="true" autoconfigure="true" />
 
-        <service public="true" id="Esb\HealthCheckSymfony\Controller" class="Esb\HealthCheckSymfony\Controller">
+        <service public="true" id="Esb\HealthCheckSymfony\Controller\HealthCheckController" class="Esb\HealthCheckSymfony\Controller\HealthCheckController">
             <tag name="container.service_subscriber" />
         </service>
     </services>
