@@ -1,9 +1,9 @@
 {
-    "name": "esb/healthcheck-symfony",
+    "name": "esb/health-check-symfony",
     "type": "library",
     "require": {
         "php": ">=7.4",
-        "esb/healthcheck": "dev-master"
+        "esb/health-check": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "^9",
