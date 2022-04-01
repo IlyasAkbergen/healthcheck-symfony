@@ -14,6 +14,10 @@ class RabbitMQCheck extends HealthCheck
 
     public function handle(): Status
     {
-        // TODO: Implement status() method.
+        $consumers = []; // todo implement
+
+        return $this->okay([
+            'consumers' => $consumers,
+        ]);
     }
 }
