@@ -4,15 +4,20 @@ namespace Esb\HealthCheckSymfony\Checks;
 
 use Esb\HealthCheck\HealthCheck;
 use Esb\HealthCheck\Status;
-use Predis\ClientInterface as Redis;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Predis\ClientInterface;
 
 class RedisCheck extends HealthCheck
 {
-    private Redis $redis;
+    private ContainerInterface $container;
+    private ClientInterface $redis;
 
-    public function __construct(Redis $redis)
-    {
-        $this->redis = $redis;
+    public function __construct(
+        ContainerInterface $container,
+        ClientInterface $redisClient
+    ) {
+        $this->container = $container;
+        $this->redis = $redisClient;
     }
 
     public function name(): string
@@ -23,7 +28,6 @@ class RedisCheck extends HealthCheck
     public function handle(): Status
     {
         $key = 'healthcheck';
-
         try {
             $this->redis->set($key, $key);
 
