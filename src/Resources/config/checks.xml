@@ -11,6 +11,8 @@
         <service id="Esb\HealthCheckSymfony\Checks\RedisCheck" class="Esb\HealthCheckSymfony\Checks\RedisCheck">
             <argument type="service" id="service_container"/>
         </service>
-        <service id="Esb\HealthCheckSymfony\Checks\RabbitMQCheck" class="Esb\HealthCheckSymfony\Checks\RabbitMQCheck"/>
+        <service id="Esb\HealthCheckSymfony\Checks\RabbitMQCheck" class="Esb\HealthCheckSymfony\Checks\RabbitMQCheck">
+            <argument type="service" id="service_container"/>
+        </service>
     </services>
 </container>
