@@ -14,7 +14,7 @@ class RedisCheck extends HealthCheck
 
     public function __construct(
         ContainerInterface $container,
-        ClientInterface $redisClient
+        ClientInterface $redisClient = null
     ) {
         $this->container = $container;
         $this->redis = $redisClient;
