@@ -26,7 +26,13 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-            ->end()
+                ->arrayNode('rabbitmq_queues')
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('name')->cannotBeEmpty()->end()
+                        ->end()
+                    ->end()
+                ->end()
         ;
 
         return $treeBuilder;

@@ -2,6 +2,7 @@
 
 namespace Esb\HealthCheckSymfony\DependencyInjection;
 
+use Esb\HealthCheckSymfony\Checks\RabbitMQCheck;
 use Esb\HealthCheckSymfony\Controller\HealthCheckController;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -45,6 +46,11 @@ class HealthCheckSymfonyExtension extends Extension
         foreach ($config['checks'] as $healthCheckConfig) {
             $healthCheckDefinition = new Reference($healthCheckConfig['id']);
             $healthCheckController->addMethodCall('addCheck', [$healthCheckDefinition]);
+        }
+
+        foreach ($config['rabbitmq_queues'] as $rabbitMqQueue) {
+            $rabbitMqCheck = $container->findDefinition(RabbitMQCheck::class);
+            $rabbitMqCheck->addMethodCall('addQueue', [$rabbitMqQueue['name']]);
         }
     }
 }
