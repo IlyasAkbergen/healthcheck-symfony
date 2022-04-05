@@ -57,16 +57,14 @@ class HealthCheckSymfonyExtension extends Extension
         }
 
         if ($kafkaConfig = $config['kafka'] ?? false) {
-            /** @var KafkaSettings $kafkaSettings */
             $kafkaSettings = $container->findDefinition(KafkaSettings::class);
-            $kafkaSettings
-                ->setGroup($kafkaConfig['group'])
-                ->setBrokerList($kafkaConfig['broker_list'])
-                ->setSaslUsername($kafkaConfig['sasl_username'])
-                ->setSaslPassword($kafkaConfig['sasl_password'])
-                ->setSecurityProtocol($kafkaConfig['security_protocol'])
-                ->setSaslMechanism($kafkaConfig['sasl_mechanism'])
-                ->setTopics(array_values($kafkaConfig['topics'] ?? []));
+            $kafkaSettings->addMethodCall('setGroup', [$kafkaConfig['group']]);
+            $kafkaSettings->addMethodCall('setBrokerList', [$kafkaConfig['broker_list']]);
+            $kafkaSettings->addMethodCall('setSaslUsername', [$kafkaConfig['sasl_username']]);
+            $kafkaSettings->addMethodCall('setSaslPassword', [$kafkaConfig['sasl_password']]);
+            $kafkaSettings->addMethodCall('setSecurityProtocol', [$kafkaConfig['security_protocol']]);
+            $kafkaSettings->addMethodCall('setSaslMechanism', [$kafkaConfig['sasl_mechanism']]);
+            $kafkaSettings->addMethodCall('setTopics', [array_values($kafkaConfig['topics'] ?? [])]);
         }
     }
 }
