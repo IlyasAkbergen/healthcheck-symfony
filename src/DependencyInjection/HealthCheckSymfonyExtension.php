@@ -64,8 +64,8 @@ class HealthCheckSymfonyExtension extends Extension
             $kafkaSettings->addMethodCall('setSaslPassword', [$kafkaConfig['sasl_password']]);
             $kafkaSettings->addMethodCall('setSecurityProtocol', [$kafkaConfig['security_protocol']]);
             $kafkaSettings->addMethodCall('setSaslMechanism', [$kafkaConfig['sasl_mechanism']]);
-            $kafkaSettings->addMethodCall('setTopics', [array_values($kafkaConfig['topics'] ?? [])]);
-            $kafkaSettings->addMethodCall('setEnv', [array_values($kafkaConfig['env'])]);
+            $kafkaSettings->addMethodCall('setTopic', [$kafkaConfig['topics']]);
+            $kafkaSettings->addMethodCall('setEnv', [$kafkaConfig['env']]);
         }
     }
 }
