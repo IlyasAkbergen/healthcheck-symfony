@@ -40,8 +40,19 @@ health_check_symfony:
     checks:
         - id: Esb\HealthCheckSymfony\Checks\DoctrineCheck
         - id: Esb\HealthCheckSymfony\Checks\RedisCheck
-    rabbitmq_queues:
+
+    rabbitmq_queues: # optional
       - name: 'queue_name'
+
+    kafka: # optional
+        group:
+        broker_list:
+        sasl_username:
+        sasl_password:
+        security_protocol:
+        sasl_mechanism:
+        topics:
+            - name:
 ```
 
 ----------------------------------

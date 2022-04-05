@@ -5,14 +5,22 @@
     http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <defaults autowire="true" autoconfigure="true" public="true" />
+
         <service id="Esb\HealthCheckSymfony\Checks\DoctrineCheck" class="Esb\HealthCheckSymfony\Checks\DoctrineCheck">
             <argument type="service" id="service_container"/>
         </service>
+
         <service id="Esb\HealthCheckSymfony\Checks\RedisCheck" class="Esb\HealthCheckSymfony\Checks\RedisCheck">
             <argument type="service" id="service_container"/>
         </service>
+
         <service id="Esb\HealthCheckSymfony\Checks\RabbitMQCheck" class="Esb\HealthCheckSymfony\Checks\RabbitMQCheck">
             <argument type="service" id="service_container"/>
         </service>
+
+        <service id="Esb\HealthCheckSymfony\Checks\KafkaCheck" class="Esb\HealthCheckSymfony\Checks\KafkaCheck">
+            <argument type="service" id="service_container"/>
+        </service>
+        <service id="Esb\HealthCheckSymfony\Settings\KafkaSettings" class="Esb\HealthCheckSymfony\Settings\KafkaSettings" />
     </services>
 </container>

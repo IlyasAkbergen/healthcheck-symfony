@@ -4,6 +4,7 @@ namespace Esb\HealthCheckSymfony\DependencyInjection;
 
 use Esb\HealthCheckSymfony\Checks\RabbitMQCheck;
 use Esb\HealthCheckSymfony\Controller\HealthCheckController;
+use Esb\HealthCheckSymfony\Settings\KafkaSettings;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -48,9 +49,24 @@ class HealthCheckSymfonyExtension extends Extension
             $healthCheckController->addMethodCall('addCheck', [$healthCheckDefinition]);
         }
 
-        foreach ($config['rabbitmq_queues'] as $rabbitMqQueue) {
-            $rabbitMqCheck = $container->findDefinition(RabbitMQCheck::class);
-            $rabbitMqCheck->addMethodCall('addQueue', [$rabbitMqQueue['name']]);
+        if ($queues = $config['rabbitmq_queues'] ?? false) {
+            foreach ($queues as $rabbitMqQueue) {
+                $rabbitMqCheck = $container->findDefinition(RabbitMQCheck::class);
+                $rabbitMqCheck->addMethodCall('addQueue', [$rabbitMqQueue['name']]);
+            }
+        }
+
+        if ($kafkaConfig = $config['kafka'] ?? false) {
+            /** @var KafkaSettings $kafkaSettings */
+            $kafkaSettings = $container->findDefinition(KafkaSettings::class);
+            $kafkaSettings
+                ->setGroup($kafkaConfig['group'])
+                ->setBrokerList($kafkaConfig['broker_list'])
+                ->setSaslUsername($kafkaConfig['sasl_username'])
+                ->setSaslPassword($kafkaConfig['sasl_password'])
+                ->setSecurityProtocol($kafkaConfig['security_protocol'])
+                ->setSaslMechanism($kafkaConfig['sasl_mechanism'])
+                ->setTopics(array_values($kafkaConfig['topics'] ?? []));
         }
     }
 }
