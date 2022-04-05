@@ -12,7 +12,8 @@ class KafkaSettings
     private string $saslPassword;
     private string $securityProtocol;
     private string $saslMechanism;
-    private array $topics;
+    private string $env;
+    private string $topic;
 
     public function setGroup(string $group): self
     {
@@ -80,14 +81,25 @@ class KafkaSettings
         return $this->saslPassword;
     }
 
-    public function setTopics(array $topics): self
+    public function setTopic(string $topic): self
     {
-        $this->topics = $topics;
+        $this->topic = $topic;
         return $this;
     }
 
-    public function getTopics(): array
+    public function getTopic(): string
     {
-        return $this->topics;
+        return $this->topic;
+    }
+
+    public function getEnv(): string
+    {
+        return $this->env;
+    }
+
+    public function setEnv(string $env): self
+    {
+        $this->env = $env;
+        return $this;
     }
 }

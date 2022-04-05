@@ -42,9 +42,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('security_protocol')->end()
                         ->scalarNode('sasl_mechanism')->end()
                         ->scalarNode('env')->end()
-                        ->arrayNode('topics')
-                            ->children()
-                                ->scalarNode('name')->cannotBeEmpty()->end()
+                        ->scalarNode('topic')->end()
                     ->end()
                 ->end()
         ;

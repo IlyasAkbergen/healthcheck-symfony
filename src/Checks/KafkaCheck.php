@@ -2,6 +2,7 @@
 
 namespace Esb\HealthCheckSymfony\Checks;
 
+use App\Handler\Kafka\HandlerInterface;
 use Esb\HealthCheck\HealthCheck;
 use Esb\HealthCheck\Status;
 use Esb\HealthCheckSymfony\Settings\KafkaSettings;
@@ -15,14 +16,17 @@ class KafkaCheck extends HealthCheck
 {
     private ContainerInterface $container;
     private KafkaSettings $kafkaSettings;
+    private HandlerInterface $topicHandler;
     private KafkaConsumer $consumer;
 
     public function __construct(
         ContainerInterface $container,
-        KafkaSettings $kafkaSettings
+        KafkaSettings $kafkaSettings,
+        HandlerInterface $topicHandler
     ) {
         $this->container = $container;
         $this->kafkaSettings = $kafkaSettings;
+        $this->topicHandler = $topicHandler;
     }
 
     public function name(): string
@@ -34,7 +38,7 @@ class KafkaCheck extends HealthCheck
     {
         $this->init();
 
-        $this->consumer->subscribe(array_keys($this->kafkaSettings->getTopics()));
+        $this->consumer->subscribe($this->kafkaSettings->getEnv() . '.' . $this->kafkaSettings->getTopic());
 
         $info = [];
 
