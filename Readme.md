@@ -51,8 +51,9 @@ health_check_symfony:
         sasl_password:
         security_protocol:
         sasl_mechanism:
+        env: test
         topics:
-            - name:
+            - name: topic_name # env is concatenated, example: test.topic_name
 ```
 
 ----------------------------------

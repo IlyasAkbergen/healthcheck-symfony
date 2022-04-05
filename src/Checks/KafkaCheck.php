@@ -38,7 +38,7 @@ class KafkaCheck extends HealthCheck
     {
         $this->init();
 
-        $this->consumer->subscribe($this->kafkaSettings->getEnv() . '.' . $this->kafkaSettings->getTopic());
+        $this->consumer->subscribe($this->getTopics());
 
         $info = [];
 
@@ -94,5 +94,14 @@ class KafkaCheck extends HealthCheck
 
         $consumer = new KafkaConsumer($conf);
         $this->consumer = $consumer;
+    }
+
+    private function getTopics(): array
+    {
+        $topics = [];
+        foreach ($this->kafkaSettings->getTopics() as $topic) {
+            $topics[] = $this->kafkaSettings->getEnv() . '.' . $topic;
+        }
+        return $topics;
     }
 }
