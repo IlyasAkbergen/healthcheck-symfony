@@ -16,17 +16,14 @@ class KafkaCheck extends HealthCheck
 {
     private ContainerInterface $container;
     private KafkaSettings $kafkaSettings;
-    private HandlerInterface $topicHandler;
     private KafkaConsumer $consumer;
 
     public function __construct(
         ContainerInterface $container,
-        KafkaSettings $kafkaSettings,
-        HandlerInterface $topicHandler
+        KafkaSettings $kafkaSettings
     ) {
         $this->container = $container;
         $this->kafkaSettings = $kafkaSettings;
-        $this->topicHandler = $topicHandler;
     }
 
     public function name(): string
