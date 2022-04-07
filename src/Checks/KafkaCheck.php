@@ -8,21 +8,18 @@ use Esb\HealthCheck\Status;
 use Esb\HealthCheckSymfony\Settings\KafkaSettings;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use RdKafka\Conf;
+use RdKafka\TopicConf;
 use RdKafka\KafkaConsumer;
 use RdKafka\Message;
 use RuntimeException;
 
 class KafkaCheck extends HealthCheck
 {
-    private ContainerInterface $container;
     private KafkaSettings $kafkaSettings;
     private KafkaConsumer $consumer;
 
-    public function __construct(
-        ContainerInterface $container,
-        KafkaSettings $kafkaSettings
-    ) {
-        $this->container = $container;
+    public function __construct(KafkaSettings $kafkaSettings)
+    {
         $this->kafkaSettings = $kafkaSettings;
     }
 
@@ -33,19 +30,33 @@ class KafkaCheck extends HealthCheck
 
     public function handle(): Status
     {
-        $this->init();
-
-        $this->consumer->subscribe($this->getTopics());
-
-        $info = [];
-
         try {
-            $firstMessage = $this->consumer->consume(RD_KAFKA_OFFSET_BEGINNING);
-            $firstMessage = $this->consumer->consume(rd_kafka_offste_tail(1));
+            $this->init();
+
+            $this->consumer->subscribe($this->getTopics());
+
+            while (true) {
+                $message = $this->consumer->consume(5 * 1000);
+                if (is_null($message)) {
+                    continue;
+                }
+                switch ($message->err) {
+                    case RD_KAFKA_RESP_ERR_NO_ERROR:
+                        if (!empty($message->payload)) {
+                            return $this->okay();
+                        }
+                        break;
+                    case RD_KAFKA_RESP_ERR__PARTITION_EOF:
+                        throw new RuntimeException('No more messages; will wait for more', $message->err);
+                    case RD_KAFKA_RESP_ERR__TIMED_OUT:
+                        throw new RuntimeException('Timed out', $message->err);
+                    default:
+                        throw new RuntimeException($message->errstr(), $message->err);
+                }
+            }
         } catch (\Throwable $e) {
-            return $this->problem('consuming messages failed', $this->exceptionContext($e));
+            return $this->problem('Consuming messages failed', $this->exceptionContext($e));
         }
-        return $this->okay($info);
     }
 
     private function init()
@@ -56,13 +67,9 @@ class KafkaCheck extends HealthCheck
             function (KafkaConsumer $kafka, $err, array $partitions = null) {
                 switch ($err) {
                     case RD_KAFKA_RESP_ERR__ASSIGN_PARTITIONS:
-                        echo "Assign: ";
-                        print_r($partitions);
                         $kafka->assign($partitions);
                         break;
                     case RD_KAFKA_RESP_ERR__REVOKE_PARTITIONS:
-                        echo "Revoke: ";
-                        print_r($partitions);
                         $kafka->assign(null);
                         break;
                     default:
@@ -89,10 +96,12 @@ class KafkaCheck extends HealthCheck
         $conf->set('sasl.password', $this->kafkaSettings->getSaslPassword());
         $conf->set('partition.assignment.strategy', "roundrobin");
 
-        $consumer = new KafkaConsumer($conf);
-        $this->consumer = $consumer;
+        $this->consumer = new KafkaConsumer($conf);
     }
 
+    /**
+     * @return string[]
+     */
     private function getTopics(): array
     {
         $topics = [];

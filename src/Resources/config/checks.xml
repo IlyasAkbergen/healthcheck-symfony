@@ -18,9 +18,7 @@
             <argument type="service" id="service_container"/>
         </service>
 
-        <service id="Esb\HealthCheckSymfony\Checks\KafkaCheck" class="Esb\HealthCheckSymfony\Checks\KafkaCheck">
-            <argument type="service" id="service_container"/>
-        </service>
+        <service id="Esb\HealthCheckSymfony\Checks\KafkaCheck" class="Esb\HealthCheckSymfony\Checks\KafkaCheck" />
         <service id="Esb\HealthCheckSymfony\Settings\KafkaSettings" class="Esb\HealthCheckSymfony\Settings\KafkaSettings" />
     </services>
 </container>
