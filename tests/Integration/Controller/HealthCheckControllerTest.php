@@ -8,7 +8,7 @@ use Esb\HealthCheck\HealthCheck;
 use Esb\HealthCheck\Status;
 use Esb\HealthCheckSymfony\Checks\DoctrineCheck;
 use Esb\HealthCheckSymfony\Checks\KafkaCheck;
-use Esb\HealthCheckSymfony\Checks\RabbitMQCheck;
+use Esb\HealthCheckSymfony\Checks\RabbitMQ\RabbitMQCheck;
 use Esb\HealthCheckSymfony\Checks\RedisCheck;
 use Esb\HealthCheckSymfony\Controller\HealthCheckController;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;

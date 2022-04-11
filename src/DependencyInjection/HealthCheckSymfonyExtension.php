@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Esb\HealthCheckSymfony\DependencyInjection;
 
-use Esb\HealthCheckSymfony\Checks\RabbitMQCheck;
+use Esb\HealthCheckSymfony\Checks\RabbitMQ\RabbitMQCheck;
 use Esb\HealthCheckSymfony\Controller\HealthCheckController;
 use Esb\HealthCheckSymfony\Settings\KafkaSettings;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class HealthCheckSymfonyExtension extends Extension
 {
