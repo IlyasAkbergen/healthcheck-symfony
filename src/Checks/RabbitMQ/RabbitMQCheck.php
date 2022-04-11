@@ -6,8 +6,6 @@ namespace Esb\HealthCheckSymfony\Checks\RabbitMQ;
 
 use Esb\HealthCheck\HealthCheck;
 use Esb\HealthCheck\Status;
-use Esb\HealthCheckSymfony\Checks\ConnectionResolver;
-use Esb\HealthCheckSymfony\Checks\ConsumerResolver;
 use OldSound\RabbitMqBundle\RabbitMq\AMQPConnectionFactory;
 use OldSound\RabbitMqBundle\RabbitMq\Consumer;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
