@@ -17,11 +17,13 @@
             </call>
         </service>
 
-        <service id="Esb\HealthCheckSymfony\Checks\RabbitMQ\RabbitMQCheck" class="Esb\HealthCheckSymfony\Checks\RabbitMQ\RabbitMQCheck">
-            <argument type="service" id="service_container"/>
-        </service>
         <service id="Esb\HealthCheckSymfony\Checks\RabbitMQ\ConnectionResolver" class="Esb\HealthCheckSymfony\Checks\RabbitMQ\ConnectionResolver" />
         <service id="Esb\HealthCheckSymfony\Checks\RabbitMQ\ConsumerResolver" class="Esb\HealthCheckSymfony\Checks\RabbitMQ\ConsumerResolver" />
+        <service id="Esb\HealthCheckSymfony\Checks\RabbitMQ\RabbitMQCheck" class="Esb\HealthCheckSymfony\Checks\RabbitMQ\RabbitMQCheck">
+            <argument type="service" id="service_container"/>
+            <argument type="service" id="Esb\HealthCheckSymfony\Checks\RabbitMQ\ConnectionResolver"/>
+            <argument type="service" id="Esb\HealthCheckSymfony\Checks\RabbitMQ\ConsumerResolver"/>
+        </service>
 
         <service id="Esb\HealthCheckSymfony\Checks\KafkaCheck" class="Esb\HealthCheckSymfony\Checks\KafkaCheck" />
         <service id="Esb\HealthCheckSymfony\Settings\KafkaSettings" class="Esb\HealthCheckSymfony\Settings\KafkaSettings" />
