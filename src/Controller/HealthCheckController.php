@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Esb\HealthCheckSymfony\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

@@ -12,6 +12,9 @@
 
         <service id="Esb\HealthCheckSymfony\Checks\RedisCheck" class="Esb\HealthCheckSymfony\Checks\RedisCheck">
             <argument type="service" id="service_container"/>
+            <call method="setPredisClient">
+                <argument type="service" id="Redis" on-invalid="null" />
+            </call>
         </service>
 
         <service id="Esb\HealthCheckSymfony\Checks\RabbitMQCheck" class="Esb\HealthCheckSymfony\Checks\RabbitMQCheck">

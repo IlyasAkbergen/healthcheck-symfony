@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Esb\HealthCheckSymfony\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
@@ -27,7 +29,9 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->arrayNode('rabbitmq_queues')
+                    ->defaultValue([])
                     ->prototype('array')
+                    ->canBeEnabled()
                         ->children()
                             ->scalarNode('name')->cannotBeEmpty()->end()
                         ->end()

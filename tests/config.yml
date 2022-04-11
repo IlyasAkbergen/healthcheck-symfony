@@ -1,0 +1,10 @@
+framework:
+    secret: secret
+    router:
+        resource: "%kernel.project_dir%/Resources/config/routes.xml"
+    test: true
+
+services:
+    _defaults:
+        autowire: true
+        public: true

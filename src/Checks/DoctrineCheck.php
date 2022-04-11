@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Esb\HealthCheckSymfony\Checks;
 
 use Doctrine\ORM\EntityManager;
@@ -11,6 +13,8 @@ class DoctrineCheck extends HealthCheck
 {
     private ContainerInterface $container;
 
+    const NAME = 'doctrine';
+
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
@@ -18,7 +22,7 @@ class DoctrineCheck extends HealthCheck
 
     public function name(): string
     {
-        return 'doctrine';
+        return self::NAME;
     }
 
     public function handle(): Status

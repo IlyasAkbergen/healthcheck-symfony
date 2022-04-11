@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Esb\HealthCheckSymfony\Checks;
 
 use Esb\HealthCheck\HealthCheck;
@@ -11,6 +13,7 @@ use OldSound\RabbitMqBundle\RabbitMq\Consumer;
 
 class RabbitMQCheck extends HealthCheck
 {
+    const NAME = 'rabbitMQ';
     private array $queues = [];
 
     private ContainerInterface $container;
@@ -22,7 +25,7 @@ class RabbitMQCheck extends HealthCheck
 
     public function name(): string
     {
-        return 'rabbitMQ';
+        return self::NAME;
     }
 
     public function handle(): Status

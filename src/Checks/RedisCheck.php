@@ -1,23 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Esb\HealthCheckSymfony\Checks;
 
 use Esb\HealthCheck\HealthCheck;
 use Esb\HealthCheck\Status;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Predis\ClientInterface;
 
 class RedisCheck extends HealthCheck
 {
     private ContainerInterface $container;
-    private ClientInterface $redis;
+    private $redis;
 
     public function __construct(
-        ContainerInterface $container,
-        ClientInterface $redisClient = null
+        ContainerInterface $container
     ) {
         $this->container = $container;
-        $this->redis = $redisClient;
+    }
+
+    public function setPredisClient($redis = null)
+    {
+        $this->redis = $redis;
     }
 
     public function name(): string
@@ -27,8 +31,12 @@ class RedisCheck extends HealthCheck
 
     public function handle(): Status
     {
-        $key = 'healthcheck';
+        if (empty($this->redis)) {
+            return $this->problem('Redis client not found.');
+        }
+
         try {
+            $key = 'healthcheck';
             $this->redis->set($key, $key);
 
             if (!$this->redis->exists($key)) {

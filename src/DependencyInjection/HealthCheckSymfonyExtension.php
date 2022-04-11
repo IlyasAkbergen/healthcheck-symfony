@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Esb\HealthCheckSymfony\DependencyInjection;
 
 use Esb\HealthCheckSymfony\Checks\RabbitMQCheck;
@@ -40,7 +42,7 @@ class HealthCheckSymfonyExtension extends Extension
         XmlFileLoader $loader,
         ContainerBuilder $container
     ): void {
-        $loader->load('checks.xml');
+        $loader->load('services.xml');
 
         $healthCheckController = $container->findDefinition(HealthCheckController::class);
 

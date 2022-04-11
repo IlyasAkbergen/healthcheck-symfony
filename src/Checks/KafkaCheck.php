@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Esb\HealthCheckSymfony\Checks;
 
 use App\Handler\Kafka\HandlerInterface;
 use Esb\HealthCheck\HealthCheck;
 use Esb\HealthCheck\Status;
 use Esb\HealthCheckSymfony\Settings\KafkaSettings;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use RdKafka\Conf;
 use RdKafka\TopicConf;
 use RdKafka\KafkaConsumer;
@@ -15,6 +16,8 @@ use RuntimeException;
 
 class KafkaCheck extends HealthCheck
 {
+    const NAME = 'kafka';
+
     private KafkaSettings $kafkaSettings;
     private KafkaConsumer $consumer;
 
@@ -25,7 +28,7 @@ class KafkaCheck extends HealthCheck
 
     public function name(): string
     {
-        return 'kafka';
+        return self::NAME;
     }
 
     public function handle(): Status
