@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Esb\HealthCheckSymfony\Checks;
 
-use Doctrine\ORM\EntityManager;
 use Esb\HealthCheck\HealthCheck;
 use Esb\HealthCheck\Status;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -27,7 +26,7 @@ class DoctrineCheck extends HealthCheck
 
     public function handle(): Status
     {
-        /** @var EntityManager $entityManager */
+        /** @var \Doctrine\ORM\EntityManager $entityManager */
         $entityManager = $this->container->get('doctrine.orm.entity_manager') ?? null;
 
         if ($entityManager === null) {

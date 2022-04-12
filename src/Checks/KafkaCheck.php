@@ -4,14 +4,9 @@ declare(strict_types=1);
 
 namespace Esb\HealthCheckSymfony\Checks;
 
-use App\Handler\Kafka\HandlerInterface;
 use Esb\HealthCheck\HealthCheck;
 use Esb\HealthCheck\Status;
 use Esb\HealthCheckSymfony\Settings\KafkaSettings;
-use RdKafka\Conf;
-use RdKafka\TopicConf;
-use RdKafka\KafkaConsumer;
-use RdKafka\Message;
 use RuntimeException;
 
 class KafkaCheck extends HealthCheck
@@ -19,7 +14,7 @@ class KafkaCheck extends HealthCheck
     const NAME = 'kafka';
 
     private KafkaSettings $kafkaSettings;
-    private KafkaConsumer $consumer;
+    private \RdKafka\KafkaConsumer $consumer;
 
     public function __construct(KafkaSettings $kafkaSettings)
     {
@@ -64,10 +59,10 @@ class KafkaCheck extends HealthCheck
 
     private function init()
     {
-        $conf = new Conf();
+        $conf = new \RdKafka\Conf();
 
         $conf->setRebalanceCb(
-            function (KafkaConsumer $kafka, $err, array $partitions = null) {
+            function (\RdKafka\KafkaConsumer $kafka, $err, array $partitions = null) {
                 switch ($err) {
                     case RD_KAFKA_RESP_ERR__ASSIGN_PARTITIONS:
                         $kafka->assign($partitions);
@@ -99,7 +94,7 @@ class KafkaCheck extends HealthCheck
         $conf->set('sasl.password', $this->kafkaSettings->getSaslPassword());
         $conf->set('partition.assignment.strategy', "roundrobin");
 
-        $this->consumer = new KafkaConsumer($conf);
+        $this->consumer = new \RdKafka\KafkaConsumer($conf);
     }
 
     /**

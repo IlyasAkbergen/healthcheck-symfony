@@ -2,9 +2,7 @@
 
 namespace Tests\Mock\RabbitMQ;
 
-use PhpAmqpLib\Connection\AbstractConnection;
-
-class ConnectionMock extends AbstractConnection
+class ConnectionMock extends \PhpAmqpLib\Connection\AbstractConnection
 {
     public function __construct()
     {

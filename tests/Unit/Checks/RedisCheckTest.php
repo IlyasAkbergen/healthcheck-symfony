@@ -8,7 +8,6 @@ use Esb\HealthCheckSymfony\Checks\RedisCheck;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Tests\Mock\PredisClientMock;
-use Predis\ClientInterface as PredisClientInterface;
 
 class RedisCheckTest extends TestCase
 {
@@ -30,7 +29,7 @@ class RedisCheckTest extends TestCase
         $predisClient = $this->createPartialMock(PredisClientMock::class, []);
 
         $container->method('get')
-            ->with(PredisClientInterface::class)
+            ->with(\Predis\ClientInterface::class)
             ->willReturn($predisClient);
 
         $redisCheck = new RedisCheck($container);

@@ -2,12 +2,9 @@
 
 namespace Tests\Mock\RabbitMQ;
 
-use OldSound\RabbitMqBundle\RabbitMq\Consumer;
-use PhpAmqpLib\Connection\AbstractConnection;
-
-class ConsumerMock extends Consumer
+class ConsumerMock extends \OldSound\RabbitMqBundle\RabbitMq\Consumer
 {
-    public function __construct(AbstractConnection $connection)
+    public function __construct(\PhpAmqpLib\Connection\AbstractConnection $connection)
     {
     }
 

@@ -6,7 +6,6 @@ namespace Esb\HealthCheckSymfony\Checks\RabbitMQ;
 
 use Esb\HealthCheck\HealthCheck;
 use Esb\HealthCheck\Status;
-use PhpAmqpLib\Connection\AMQPStreamConnection;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class RabbitMQCheck extends HealthCheck
@@ -36,7 +35,7 @@ class RabbitMQCheck extends HealthCheck
     public function handle(): Status
     {
         try {
-            /** @var AMQPStreamConnection $connection */
+            /** @var \PhpAmqpLib\Connection\AMQPStreamConnection\AMQPStreamConnection $connection */
             $connection = $this->connectionResolver->resolve($this->container);
 
             if (!$connection) {
