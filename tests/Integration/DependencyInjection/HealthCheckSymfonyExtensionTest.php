@@ -26,7 +26,7 @@ class HealthCheckSymfonyExtensionTest extends TestCase
 
         $container = $this->createContainerFromFixture('filled_bundle_config');
 
-        self::assertCount(7, $container->getDefinitions());
+        self::assertCount(9, $container->getDefinitions());
         self::assertArrayHasKey(HealthCheckController::class, $container->getDefinitions());
         self::assertArrayHasKey(DoctrineCheck::class, $container->getDefinitions());
         self::assertArrayHasKey(KafkaCheck::class, $container->getDefinitions());

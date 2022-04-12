@@ -1,0 +1,28 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Esb\HealthCheckSymfony\Checks\DoctrineCheck:
+        class: Esb\HealthCheckSymfony\Checks\DoctrineCheck
+        arguments:
+            - '@service_container'
+
+    Esb\HealthCheckSymfony\Checks\RedisCheck:
+        class: Esb\HealthCheckSymfony\Checks\RedisCheck
+        arguments:
+            - '@service_container'
+        calls:
+            - setPredisClient: [ '@?Redis' ]
+
+    Esb\HealthCheckSymfony\Checks\RabbitMQ\ConnectionResolver: ~
+    Esb\HealthCheckSymfony\Checks\RabbitMQ\ConsumerResolver: ~
+    Esb\HealthCheckSymfony\Checks\RabbitMQ\RabbitMQCheck:
+        class: Esb\HealthCheckSymfony\Checks\RabbitMQ\RabbitMQCheck
+        arguments:
+            - '@service_container'
+            - '@Esb\HealthCheckSymfony\Checks\RabbitMQ\ConnectionResolver'
+            - '@Esb\HealthCheckSymfony\Checks\RabbitMQ\ConsumerResolver'
+
+    Esb\HealthCheckSymfony\Checks\KafkaCheck: ~
+    Esb\HealthCheckSymfony\Settings\KafkaSettings: ~

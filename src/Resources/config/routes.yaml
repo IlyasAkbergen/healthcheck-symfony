@@ -1,0 +1,4 @@
+routes:
+    path: /healthcheck
+    methods: GET
+    controller: Esb\HealthCheckSymfony\Controller\HealthCheckController::index

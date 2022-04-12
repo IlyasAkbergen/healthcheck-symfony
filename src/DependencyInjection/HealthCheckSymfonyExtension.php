@@ -9,7 +9,7 @@ use Esb\HealthCheckSymfony\Controller\HealthCheckController;
 use Esb\HealthCheckSymfony\Settings\KafkaSettings;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
@@ -26,8 +26,8 @@ class HealthCheckSymfonyExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('controller.xml');
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader->load('controller.yaml');
 
         $this->loadHealthChecks($config, $loader, $container);
     }
@@ -39,10 +39,10 @@ class HealthCheckSymfonyExtension extends Extension
      */
     private function loadHealthChecks(
         array $config,
-        XmlFileLoader $loader,
+        YamlFileLoader $loader,
         ContainerBuilder $container
     ): void {
-        $loader->load('services.xml');
+        $loader->load('services.yaml');
 
         $healthCheckController = $container->findDefinition(HealthCheckController::class);
 

@@ -1,0 +1,9 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Esb\HealthCheckSymfony\Controller\HealthCheckController:
+        class: Esb\HealthCheckSymfony\Controller\HealthCheckController
+        tags: { name: container.service_subscriber }
+        public: true
