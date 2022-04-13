@@ -6,17 +6,18 @@ namespace Esb\HealthCheckSymfony\Checks;
 
 use Esb\HealthCheck\HealthCheck;
 use Esb\HealthCheck\Status;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Psr\Log\LoggerInterface;
 
 class RedisCheck extends HealthCheck
 {
-    private ContainerInterface $container;
+    public const NAME = 'redis';
+
+    private LoggerInterface $logger;
     private $redis;
 
-    public function __construct(
-        ContainerInterface $container
-    ) {
-        $this->container = $container;
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
     }
 
     public function setPredisClient($redis = null)
@@ -26,7 +27,7 @@ class RedisCheck extends HealthCheck
 
     public function name(): string
     {
-        return 'redis';
+        return self::NAME;
     }
 
     public function handle(): Status
@@ -45,6 +46,12 @@ class RedisCheck extends HealthCheck
 
             $info = $this->redis->info();
         } catch (\Throwable $e) {
+            $this->logger->log(
+                'error',
+                $e->getMessage(),
+                $this->exceptionContext($e)
+            );
+
             return $this->problem('Redis error');
         }
 

@@ -6,17 +6,22 @@ namespace Esb\HealthCheckSymfony\Checks;
 
 use Esb\HealthCheck\HealthCheck;
 use Esb\HealthCheck\Status;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class DoctrineCheck extends HealthCheck
 {
     private ContainerInterface $container;
+    private LoggerInterface $logger;
 
     const NAME = 'doctrine';
 
-    public function __construct(ContainerInterface $container)
-    {
+    public function __construct(
+        ContainerInterface $container,
+        LoggerInterface $logger
+    ) {
         $this->container = $container;
+        $this->logger = $logger;
     }
 
     public function name(): string
@@ -38,6 +43,11 @@ class DoctrineCheck extends HealthCheck
             $connection = $entityManager->getConnection();
             $connection->executeQuery($connection->getDatabasePlatform()->getDummySelectSQL())->free();
         } catch (\Throwable $e) {
+            $this->logger->log(
+                'error',
+                $e->getMessage(),
+                $this->exceptionContext($e)
+            );
             return $this->problem('Could not execute query');
         }
 

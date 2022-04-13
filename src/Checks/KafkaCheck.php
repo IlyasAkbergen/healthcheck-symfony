@@ -7,6 +7,7 @@ namespace Esb\HealthCheckSymfony\Checks;
 use Esb\HealthCheck\HealthCheck;
 use Esb\HealthCheck\Status;
 use Esb\HealthCheckSymfony\Settings\KafkaSettings;
+use Psr\Log\LoggerInterface;
 use RuntimeException;
 
 class KafkaCheck extends HealthCheck
@@ -15,10 +16,14 @@ class KafkaCheck extends HealthCheck
 
     private KafkaSettings $kafkaSettings;
     private \RdKafka\KafkaConsumer $consumer;
+    private LoggerInterface $logger;
 
-    public function __construct(KafkaSettings $kafkaSettings)
-    {
+    public function __construct(
+        KafkaSettings $kafkaSettings,
+        LoggerInterface $logger
+    ) {
         $this->kafkaSettings = $kafkaSettings;
+        $this->logger = $logger;
     }
 
     public function name(): string
@@ -53,6 +58,11 @@ class KafkaCheck extends HealthCheck
                 }
             }
         } catch (\Throwable $e) {
+            $this->logger->log(
+                'error',
+                $e->getMessage(),
+                $this->exceptionContext($e)
+            );
             return $this->problem('Consuming messages failed');
         }
     }

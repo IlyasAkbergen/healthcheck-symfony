@@ -6,6 +6,7 @@ namespace Esb\HealthCheckSymfony\Checks\RabbitMQ;
 
 use Esb\HealthCheck\HealthCheck;
 use Esb\HealthCheck\Status;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class RabbitMQCheck extends HealthCheck
@@ -16,15 +17,18 @@ class RabbitMQCheck extends HealthCheck
     private ContainerInterface $container;
     private ConnectionResolver $connectionResolver;
     private ConsumerResolver $consumerResolver;
+    private LoggerInterface $logger;
 
     public function __construct(
         ContainerInterface $container,
         ConnectionResolver $connectionResolver,
-        ConsumerResolver $consumerResolver
+        ConsumerResolver $consumerResolver,
+        LoggerInterface $logger
     ) {
         $this->container = $container;
         $this->connectionResolver = $connectionResolver;
         $this->consumerResolver = $consumerResolver;
+        $this->logger = $logger;
     }
 
     public function name(): string
@@ -61,6 +65,11 @@ class RabbitMQCheck extends HealthCheck
                 ];
             }
         } catch (\Throwable $exception) {
+            $this->logger->log(
+                'error',
+                $exception->getMessage(),
+                $this->exceptionContext($exception)
+            );
             return $this->problem('RabbitMQCheck failed');
         }
 

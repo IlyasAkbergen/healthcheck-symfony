@@ -7,11 +7,12 @@ services:
         class: Esb\HealthCheckSymfony\Checks\DoctrineCheck
         arguments:
             - '@service_container'
+            - '@Psr\Log\LoggerInterface'
 
     Esb\HealthCheckSymfony\Checks\RedisCheck:
         class: Esb\HealthCheckSymfony\Checks\RedisCheck
         arguments:
-            - '@service_container'
+            - '@Psr\Log\LoggerInterface'
         calls:
             - setPredisClient: [ '@?Redis' ]
 
@@ -23,6 +24,11 @@ services:
             - '@service_container'
             - '@Esb\HealthCheckSymfony\Checks\RabbitMQ\ConnectionResolver'
             - '@Esb\HealthCheckSymfony\Checks\RabbitMQ\ConsumerResolver'
+            - '@Psr\Log\LoggerInterface'
 
-    Esb\HealthCheckSymfony\Checks\KafkaCheck: ~
     Esb\HealthCheckSymfony\Settings\KafkaSettings: ~
+    Esb\HealthCheckSymfony\Checks\KafkaCheck:
+        class: Esb\HealthCheckSymfony\Checks\KafkaCheck
+        arguments:
+            - '@Esb\HealthCheckSymfony\Settings\KafkaSettings'
+            - '@Psr\Log\LoggerInterface'
