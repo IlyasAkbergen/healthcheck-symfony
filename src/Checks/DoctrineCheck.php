@@ -38,9 +38,7 @@ class DoctrineCheck extends HealthCheck
             $connection = $entityManager->getConnection();
             $connection->executeQuery($connection->getDatabasePlatform()->getDummySelectSQL())->free();
         } catch (\Throwable $e) {
-            return $this->problem('Could not execute query', [
-                'exception' => $this->exceptionContext($e),
-            ]);
+            return $this->problem('Could not execute query');
         }
 
         return $this->okay();

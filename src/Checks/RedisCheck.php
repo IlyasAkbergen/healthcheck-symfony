@@ -45,9 +45,7 @@ class RedisCheck extends HealthCheck
 
             $info = $this->redis->info();
         } catch (\Throwable $e) {
-            return $this->problem('Redis error', [
-                'exception' => $this->exceptionContext($e),
-            ]);
+            return $this->problem('Redis error');
         }
 
         return $this->okay([

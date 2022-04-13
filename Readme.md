@@ -98,7 +98,7 @@ namespace YourProject\Check;
 use Esb\HealthCheck\HealthCheck;
 use Esb\HealthCheck\Status;
 
-class CustomCheck implements HealthCheck
+class CustomCheck extends HealthCheck
 {
     public function name(): string
     {

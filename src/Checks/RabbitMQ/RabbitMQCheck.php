@@ -61,7 +61,7 @@ class RabbitMQCheck extends HealthCheck
                 ];
             }
         } catch (\Throwable $exception) {
-            return $this->problem('RabbitMQCheck failed', $this->exceptionContext($exception));
+            return $this->problem('RabbitMQCheck failed');
         }
 
         return isset($info)

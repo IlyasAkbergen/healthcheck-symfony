@@ -53,7 +53,7 @@ class KafkaCheck extends HealthCheck
                 }
             }
         } catch (\Throwable $e) {
-            return $this->problem('Consuming messages failed', $this->exceptionContext($e));
+            return $this->problem('Consuming messages failed');
         }
     }
 
